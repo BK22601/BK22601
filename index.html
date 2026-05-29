@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e11d48" />
+  <title>HeartTrack — Heart Rate Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <span class="beat" aria-hidden="true">❤</span>
+        <h1>HeartTrack</h1>
+      </div>
+      <p class="tagline">Log, measure, and watch your heart rate over time.</p>
+    </header>
+
+    <main>
+      <!-- Stats overview -->
+      <section class="stats" aria-label="Statistics">
+        <div class="stat-card">
+          <span class="stat-value" id="statLatest">—</span>
+          <span class="stat-label">Latest</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statAvg">—</span>
+          <span class="stat-label">Average</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statMin">—</span>
+          <span class="stat-label">Lowest</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statMax">—</span>
+          <span class="stat-label">Highest</span>
+        </div>
+      </section>
+
+      <!-- Tap to measure -->
+      <section class="card measure">
+        <h2>Measure your pulse</h2>
+        <p class="hint">Find your pulse, then tap the heart in rhythm with each beat. We'll calculate your BPM.</p>
+        <button id="tapButton" class="tap-button" type="button" aria-live="polite">
+          <span class="tap-heart">❤</span>
+          <span class="tap-text" id="tapText">Tap to start</span>
+        </button>
+        <div class="measure-readout">
+          <span id="tapBpm">0</span> <span class="unit">BPM</span>
+          <span class="taps" id="tapCount">0 taps</span>
+        </div>
+        <div class="measure-actions">
+          <button id="useMeasured" class="btn btn-primary" type="button" disabled>Use this reading</button>
+          <button id="resetMeasure" class="btn btn-ghost" type="button">Reset</button>
+        </div>
+      </section>
+
+      <!-- Manual log form -->
+      <section class="card">
+        <h2>Log a reading</h2>
+        <form id="logForm" class="log-form">
+          <div class="field">
+            <label for="bpm">Heart rate (BPM)</label>
+            <input type="number" id="bpm" name="bpm" min="20" max="300" placeholder="72" required />
+          </div>
+          <div class="field">
+            <label for="tag">Context</label>
+            <select id="tag" name="tag">
+              <option value="resting">Resting</option>
+              <option value="active">Active</option>
+              <option value="exercise">Exercise</option>
+              <option value="recovery">Recovery</option>
+              <option value="stressed">Stressed</option>
+            </select>
+          </div>
+          <div class="field field-wide">
+            <label for="note">Note (optional)</label>
+            <input type="text" id="note" name="note" maxlength="120" placeholder="e.g. after morning walk" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add reading</button>
+        </form>
+      </section>
+
+      <!-- Chart -->
+      <section class="card">
+        <div class="card-head">
+          <h2>Trend</h2>
+          <span class="hint" id="chartHint">Last 30 readings</span>
+        </div>
+        <canvas id="chart" height="220" aria-label="Heart rate trend chart"></canvas>
+        <p class="empty" id="chartEmpty">No readings yet — log one above to see your trend.</p>
+      </section>
+
+      <!-- History -->
+      <section class="card">
+        <div class="card-head">
+          <h2>History</h2>
+          <button id="clearAll" class="btn btn-danger-ghost" type="button">Clear all</button>
+        </div>
+        <ul class="history" id="history"></ul>
+        <p class="empty" id="historyEmpty">Your logged readings will appear here.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Data is stored only in this browser. HeartTrack is not a medical device.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
